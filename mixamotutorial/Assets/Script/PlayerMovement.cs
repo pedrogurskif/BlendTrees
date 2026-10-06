@@ -6,9 +6,15 @@ public class FirstPersonMovement : MonoBehaviour
 {
     public float speed = 5;
     public float runSpeed = 9;
+    public float animationSmoothTime = 0.1f;
     public InputActionAsset inputActions;
     private InputAction runAction;
     private InputAction moveAction;
+    private InputAction jumpAction;
+    public Animator animator;
+
+    Vector2 currentAnimationBlendVector;
+    Vector2 animationSpeed;
 
     Rigidbody rigidbody;
 
@@ -26,8 +32,12 @@ public class FirstPersonMovement : MonoBehaviour
     void FixedUpdate()
     {
         float targetMovingSpeed = runAction.IsPressed() ? runSpeed : speed;
+        Vector2 input = moveAction.ReadValue<Vector2>() * targetMovingSpeed;
+        currentAnimationBlendVector = Vector2.SmoothDamp(currentAnimationBlendVector, input, ref animationSpeed, animationSmoothTime);
+        Vector3 move = new Vector3(currentAnimationBlendVector.x, 0f, currentAnimationBlendVector.y);
+        rigidbody.linearVelocity = transform.rotation * move;
 
-        Vector2 targetVelocity = moveAction.ReadValue<Vector2>() * targetMovingSpeed;
-        rigidbody.linearVelocity = transform.rotation * new Vector3(targetVelocity.x, rigidbody.linearVelocity.y, targetVelocity.y);
+        animator.SetFloat("SpeedSides", move.x);
+        animator.SetFloat("SpeedFront", move.z);
     }
 }

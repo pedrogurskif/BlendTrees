@@ -660,7 +660,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FirstPersonMovement
   speed: 5
   runSpeed: 9
+  animationSmoothTime: 0.05
   inputActions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  animator: {fileID: 939827716}
 --- !u!54 &939827715
 Rigidbody:
   m_ObjectHideFlags: 0
