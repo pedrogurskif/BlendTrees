@@ -33,11 +33,11 @@ public class FirstPersonMovement : MonoBehaviour
         moveAction = InputSystem.actions.FindAction("Move");
         runAction = InputSystem.actions.FindAction("Sprint");
         jumpAction = InputSystem.actions.FindAction("Jump");
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     void Update()
     {
-        Cursor.lockState = CursorLockMode.Locked;
         float targetMovingSpeed = runAction.IsPressed() ? runSpeed : speed;
         Vector2 input = moveAction.ReadValue<Vector2>() * targetMovingSpeed;
         currentAnimationBlendVector = Vector2.SmoothDamp(currentAnimationBlendVector, input, ref animationSpeed, animationSmoothTime);
